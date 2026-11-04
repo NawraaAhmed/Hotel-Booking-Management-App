@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
-</head>
-<body>
+  </head>
+  <body>
     <%- include('./partials/navbar') %>
 
     <h1>Welcome to my Website</h1>
-    
-</body>
+    <h2>Explore our hotels</h2>
+
+    <% hotels.forEach(hotel => { %>
+        <img src="<%= hotel.image %>" alt="<%= hotel.name %>" width="200">
+        <h3><%= hotel.name %></h3>
+        <p><%= hotel.location %></p>
+        <p>Rating: <%= hotel.rating %>/5</p>
+        <a href="/hotels/<%= hotel._id %>">View Hotel</a>
+    <% }) %>
+
+  </body>
 </html>
