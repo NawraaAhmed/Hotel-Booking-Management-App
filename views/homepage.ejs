@@ -8,16 +8,19 @@
   <body>
     <%- include('./partials/navbar') %>
 
-    <h1>Welcome to my Website</h1>
-    <h2>Explore our hotels</h2>
+    <% if (message) { %>
+      <p class="success-message"><%= message %></p>
+    <% } %>
 
-    <% hotels.forEach(hotel => { %>
-        <img src="<%= hotel.image %>" alt="<%= hotel.name %>" width="200">
-        <h3><%= hotel.name %></h3>
-        <p><%= hotel.location %></p>
-        <p>Rating: <%= hotel.rating %>/5</p>
-        <a href="/hotels/<%= hotel._id %>">View Hotel</a>
-    <% }) %>
+    <h1>Welcome to Mabeet<% if (user) { %>, <%= user.username %><% } %>!</h1>
+    <p>Find and book your perfect stay in Bahrain.</p>
+
+    <h2>Top 5-Star Hotels</h2>
+    <div class="hotel-list">
+      <% topHotels.forEach(hotel => { %>
+        <%- include('./partials/hotel-card', { hotel }) %>
+      <% }) %>
+    </div>
 
   </body>
 </html>
