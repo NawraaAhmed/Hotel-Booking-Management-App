@@ -1,0 +1,21 @@
+<div class="hotel-card">
+  <div class="hotel-card-info">
+    <div class="hotel-card-title">
+      <h3><%= hotel.name %></h3>
+      <span><%= "⭐".repeat(hotel.rating) %> (<%= hotel.rating %>-star)</span>
+    </div>
+
+    <p>📍 <%= hotel.location %></p>
+
+    <p><a href="<%= hotel.mapUrl %>"> View on Google Maps</a></p>
+
+    <img
+      class="hotel-card-image"
+      src="<%= hotel.image %>"
+      alt="<%= hotel.name %>"
+      width="200"
+    />
+
+    <a class="button" href="/hotels/<%= hotel._id %>">More Details</a>
+  </div>
+</div>
