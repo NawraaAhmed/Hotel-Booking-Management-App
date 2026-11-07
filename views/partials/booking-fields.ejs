@@ -1,0 +1,51 @@
+<h3>Dates</h3>
+<label for="checkIn">Check-in</label>
+<input type="date" id="checkIn" name="checkIn" min="<%= today %>" value="<%= formData.checkIn %>" required />
+<label for="checkOut">Check-out</label>
+<input type="date" id="checkOut" name="checkOut" min="<%= today %>" value="<%= formData.checkOut %>" required />
+
+<h3>Guests</h3>
+<label for="adults">Adults</label>
+<input type="number" id="adults" name="adults" min="1" max="4" value="<%= formData.adults || 1 %>" required />
+<label for="children">Children</label>
+<input type="number" id="children" name="children" min="0" max="4" value="<%= formData.children || 0 %>" required />
+<label for="rooms">Rooms</label>
+<input type="number" id="rooms" name="rooms" min="1" max="3" value="<%= formData.rooms || 1 %>" required />
+
+<h3>Room</h3>
+<label for="roomType">Room type (price per night)</label>
+<select id="roomType" name="roomType" required>
+  <option value="">Choose a room</option>
+  <% ["Single", "Twin", "Family", "Suite"].forEach(roomType => { %>
+    <option value="<%= roomType %>" <% if (formData.roomType === roomType) { %>selected<% } %>>
+      <%= roomType %> · BHD <%= hotel.roomPrices[roomType] %> · up to <%= hotel.roomCapacity[roomType] %> guests
+    </option>
+  <% }) %>
+</select>
+
+<label for="bedType">Bed</label>
+<select id="bedType" name="bedType" required>
+  <option value="">Choose a bed</option>
+  <% ["King", "Queen", "Twin"].forEach(bedType => { %>
+    <option value="<%= bedType %>" <% if (formData.bedType === bedType) { %>selected<% } %>><%= bedType %></option>
+  <% }) %>
+</select>
+
+<label for="viewType">View</label>
+<select id="viewType" name="viewType" required>
+  <option value="">Choose a view</option>
+  <% ["Sea", "City", "Garden"].forEach(viewType => { %>
+    <option value="<%= viewType %>" <% if (formData.viewType === viewType) { %>selected<% } %>><%= viewType %></option>
+  <% }) %>
+</select>
+
+<h3>Meal Plan</h3>
+<label for="mealPlan">Meal plan (per person, per night)</label>
+<select id="mealPlan" name="mealPlan" required>
+  <option value="">Choose a meal plan</option>
+  <% ["Breakfast", "Half Board", "Full Board"].forEach(mealPlan => { %>
+    <option value="<%= mealPlan %>" <% if (formData.mealPlan === mealPlan) { %>selected<% } %>>
+      <%= mealPlan %> · Adult BHD <%= hotel.mealPrices[mealPlan].adult %> · Child BHD <%= hotel.mealPrices[mealPlan].child %>
+    </option>
+  <% }) %>
+</select>
