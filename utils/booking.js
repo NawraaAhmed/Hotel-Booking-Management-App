@@ -18,6 +18,13 @@ function countNights(checkIn, checkOut) {
   return Math.round((new Date(checkOut) - new Date(checkIn)) / oneDay);
 }
 
+// checks that a string is a real date in the "YYYY-MM-DD" format
+function isValidDate(dateString) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) return false;
+  const date = new Date(dateString);
+  return !isNaN(date) && date.toISOString().slice(0, 10) === dateString;
+}
+
 function getBookingData(body) {
   return {
     checkIn: body.checkIn,
