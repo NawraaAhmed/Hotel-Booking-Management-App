@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reviews - <%= hotel.name %></title>
+  </head>
+  <body>
+    <%- include('../partials/navbar') %>
+
+    <h1>Reviews for <%= hotel.name %></h1>
+    <p><a href="/hotels/<%= hotel._id %>">Back to hotel</a></p>
+
+    <% if (reviews.length === 0) { %>
+      <p>No reviews yet.</p>
+    <% } %>
+
+    <% reviews.forEach(review => { %>
+      <div class="review">
+        <p><strong><%= review.user ? review.user.username : "Former guest" %></strong> — <%= "⭐".repeat(review.rating) %> (<%= review.rating %>/5)</p>
+        <p><%= review.comment %></p>
+        <p>Posted on <%= review.createdAt.toDateString() %></p>
+
+        <% if (user && review.user && review.user._id.toString() === user._id.toString()) { %>
+          <a href="/reviews/<%= review._id %>/edit">Edit</a>
+          <form action="/reviews/<%= review._id %>?_method=DELETE" method="POST">
+            <button>Delete</button>
+          </form>
+        <% } %>
+      </div>
+    <% }) %>
+  </body>
+</html>
