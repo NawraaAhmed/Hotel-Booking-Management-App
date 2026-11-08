@@ -2,6 +2,7 @@ const router = require("express").Router();
 const crypto = require("crypto"); // for unique payment id
 const Hotel = require("../models/Hotel.js");
 const Review = require("../models/Review.js");
+const isSignedIn = require("../middleware/is-signed-in.js");
 const {
   getToday,
   getBookingData,
@@ -11,6 +12,11 @@ const {
 router.get("/", async (req, res) => {
   const hotels = await Hotel.find();
   res.render("hotels/homepage.ejs", { hotels });
+});
+
+router.get("/favorites", isSignedIn, async (req, res) => {
+  const hotels = await Hotel.find({ favoriteByUsers: req.session.user._id });
+  res.render("hotels/favorites.ejs", { hotels });
 });
 
 router.get("/:hotelId", async (req, res) => {
@@ -75,6 +81,38 @@ router.get("/:hotelId/reviews", async (req, res) => {
     .sort({ createdAt: -1 });
 
   res.render("hotels/reviews.ejs", { hotel, reviews });
+});
+
+// after favorite/unfavorite: go back to the page the heart was clicked on
+// (only these pages are allowed, otherwise go to the hotel details page)
+function getReturnPath(returnTo, hotelId) {
+  const allowedPaths = ["/", "/hotels", "/hotels/favorites"];
+  if (allowedPaths.includes(returnTo)) {
+    return returnTo;
+  }
+  return "/hotels/" + hotelId;
+}
+
+// FAVORITE (signed in only, a user can only add/remove themselves)
+router.post("/:hotelId/favorite", isSignedIn, async (req, res) => {
+  // $addToSet only adds the user if they are not already in the list
+  const hotel = await Hotel.findByIdAndUpdate(req.params.hotelId, {
+    $addToSet: { favoriteByUsers: req.session.user._id },
+  });
+  if (!hotel) {
+    return res.send("Hotel not found.");
+  }
+  res.redirect(getReturnPath(req.body.returnTo, hotel._id));
+});
+
+router.post("/:hotelId/unfavorite", isSignedIn, async (req, res) => {
+  const hotel = await Hotel.findByIdAndUpdate(req.params.hotelId, {
+    $pull: { favoriteByUsers: req.session.user._id },
+  });
+  if (!hotel) {
+    return res.send("Hotel not found.");
+  }
+  res.redirect(getReturnPath(req.body.returnTo, hotel._id));
 });
 
 module.exports = router;

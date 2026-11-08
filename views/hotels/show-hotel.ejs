@@ -14,6 +14,22 @@
     <p><a href="<%= hotel.mapUrl %>" target="_blank">View on Google Maps</a></p>
     <p><a href="/hotels/<%= hotel._id %>/reviews">Read guest reviews</a></p>
 
+    <p>Favorited by: <%= hotel.favoriteByUsers.length %> people</p>
+
+    <% if (user) { %>
+      <% const isFavorited = hotel.favoriteByUsers.some(oneUserId => oneUserId.equals(user._id)); %>
+
+      <% if (isFavorited) { %>
+        <form action="/hotels/<%= hotel._id %>/unfavorite" method="POST">
+          <button type="submit" title="Remove from favorites">❤️</button>
+        </form>
+      <% } else { %>
+        <form action="/hotels/<%= hotel._id %>/favorite" method="POST">
+          <button type="submit" title="Add to favorites">🤍</button>
+        </form>
+      <% } %>
+    <% } %>
+
     <h2>Gallery</h2>
     <div class="gallery">
       <img src="<%= hotel.image %>" alt="<%= hotel.name %>" width="200" />

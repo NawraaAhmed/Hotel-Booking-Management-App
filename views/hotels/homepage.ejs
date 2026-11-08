@@ -12,7 +12,7 @@
 
     <div class="hotel-list">
       <% hotels.forEach(hotel => { %>
-        <%- include('../partials/hotel-card', { hotel }) %>
+        <%- include('../partials/hotel-card', { hotel, returnTo: "/hotels" }) %>
       <% }) %>
     </div>
 

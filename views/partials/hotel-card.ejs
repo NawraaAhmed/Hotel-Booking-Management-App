@@ -15,7 +15,20 @@
       alt="<%= hotel.name %>"
       width="200"
     />
-
+  
     <a class="button" href="/hotels/<%= hotel._id %>">More Details</a>
+    
+    <% const isFavorited = user && hotel.favoriteByUsers.some(oneUserId => oneUserId.equals(user._id)); %>
+      <% if (isFavorited) { %>
+        <form action="/hotels/<%= hotel._id %>/unfavorite" method="POST">
+          <input type="hidden" name="returnTo" value="<%= returnTo %>" />
+          <button type="submit" title="Remove from favorites">❤️</button>
+        </form>
+      <% } else { %>
+        <form action="/hotels/<%= hotel._id %>/favorite" method="POST">
+          <input type="hidden" name="returnTo" value="<%= returnTo %>" />
+          <button type="submit" title="Add to favorites">🤍</button>
+        </form>
+      <% } %>
   </div>
 </div>

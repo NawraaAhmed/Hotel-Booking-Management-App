@@ -18,7 +18,7 @@
     <h2>Top 5-Star Hotels</h2>
     <div class="hotel-list">
       <% topHotels.forEach(hotel => { %>
-        <%- include('./partials/hotel-card', { hotel }) %>
+        <%- include('./partials/hotel-card', { hotel, returnTo: "/" }) %>
       <% }) %>
     </div>
 

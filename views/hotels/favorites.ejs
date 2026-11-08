@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Favorites</title>
+  </head>
+  <body>
+    <%- include('../partials/navbar') %>
+
+    <h1>My Favorites</h1>
+
+    <% if (hotels.length === 0) { %>
+      <p>You have no favorite hotels yet.</p>
+    <% } %>
+
+    <ul>
+      <% hotels.forEach(hotel => { %>
+        <li>
+          <form action="/hotels/<%= hotel._id %>/unfavorite" method="POST">
+            <a href="/hotels/<%= hotel._id %>"><%= hotel.name %></a>
+            <input type="hidden" name="returnTo" value="/hotels/favorites" />
+            <button type="submit" title="Remove from favorites">❤️</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+
+  </body>
+</html>
