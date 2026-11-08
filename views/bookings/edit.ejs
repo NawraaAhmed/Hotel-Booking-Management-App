@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Booking</title>
+  </head>
+  <body>
+    <%- include('../partials/navbar') %>
+
+    <h1>Edit Booking — <%= hotel.name %></h1>
+
+    <% if (error) { %>
+      <p class="error-message"><%= error %></p>
+    <% } %>
+
+    <form action="/bookings/<%= booking._id %>?_method=PUT" method="POST">
+      <%- include('../partials/booking-fields', { hotel, formData, today }) %>
+      <p>The total price will be recalculated automatically.</p>
+      <button type="submit">Update Booking</button>
+    </form>
+  </body>
+</html>
