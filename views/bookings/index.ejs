@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Bookings</title>
+  </head>
+  <body>
+    <%- include('../partials/navbar') %>
+
+    <h1>My Bookings</h1>
+
+    <% if (bookings.length === 0) { %>
+      <p>You have no bookings yet. <a href="/hotels">Browse hotels</a></p>
+    <% } %>
+
+    <% bookings.forEach(booking => { %>
+      <div class="booking">
+        <h3><%= booking.hotel ? booking.hotel.name : "Hotel no longer available" %></h3>
+        <p><%= booking.checkIn %> to <%= booking.checkOut %></p>
+        <p><%= booking.rooms %> × <%= booking.roomType %> room(s) — Total: BHD <%= booking.totalPrice %></p>
+        <% if (booking.checkOut < today) { %>
+          <p>Status: Completed</p>
+        <% } else if (booking.checkIn <= today) { %>
+          <p>Status: Current stay</p>
+        <% } else { %>
+          <p>Status: Upcoming</p>
+        <% } %>
+        <a href="/bookings/<%= booking._id %>">View Details</a>
+      </div>
+    <% }) %>
+  </body>
+</html>
