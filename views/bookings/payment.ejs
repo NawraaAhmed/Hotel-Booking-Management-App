@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment</title>
+  </head>
+  <body>
+    <%- include('../partials/navbar') %>
+
+    <h1>Payment</h1>
+
+    <% if (error) { %>
+      <p class="error-message"><%= error %></p>
+      <p><a href="/hotels/<%= hotel._id %>">Go back and change your booking</a></p>
+    <% } else { %>
+      <h2><%= hotel.name %></h2>
+      <ul>
+        <li>Check-in: <%= booking.checkIn %></li>
+        <li>Check-out: <%= booking.checkOut %></li>
+        <li>Nights: <%= price.nights %></li>
+        <li>Adults: <%= booking.adults %></li>
+        <li>Children: <%= booking.children %></li>
+        <li>Rooms: <%= booking.rooms %></li>
+        <li>Room type: <%= booking.roomType %></li>
+        <li>Bed type: <%= booking.bedType %></li>
+        <li>View type: <%= booking.viewType %></li>
+        <li>Meal plan: <%= booking.mealPlan %></li>
+      </ul>
+
+      <h2>Price Breakdown</h2>
+      <ul>
+        <li>Room: BHD <%= price.roomPrice %> × <%= booking.rooms %> room(s) × <%= price.nights %> night(s) = BHD <%= price.roomCost %></li>
+        <li>Adult meals: BHD <%= price.adultMealPrice %> × <%= booking.adults %> adult(s) × <%= price.nights %> night(s) = BHD <%= price.adultMealCost %></li>
+        <li>Child meals: BHD <%= price.childMealPrice %> × <%= booking.children %> child(ren) × <%= price.nights %> night(s) = BHD <%= price.childMealCost %></li>
+        <li>Meal cost: BHD <%= price.mealCost %></li>
+      </ul>
+      <h3>Total: BHD <%= price.totalPrice %></h3>
+
+      <form action="/bookings/payment" method="POST" onsubmit="this.querySelector('button').disabled = true">
+        <button type="submit">Confirm Payment</button>
+      </form>
+      <p><a href="/hotels/<%= hotel._id %>">Change booking</a></p>
+    <% } %>
+  </body>
+</html>
