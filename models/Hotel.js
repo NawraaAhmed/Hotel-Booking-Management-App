@@ -84,6 +84,12 @@ const hotelSchema = new mongoose.Schema(
         child: { type: Number, required: true, min: 0 },
       },
     },
+    favoriteByUsers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { timestamps: true },
 );
