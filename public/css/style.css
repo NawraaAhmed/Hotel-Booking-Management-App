@@ -364,6 +364,14 @@ textarea {
   margin: 4px 0;
 }
 
+#hotel-map {
+  height: 220px;
+  width: 100%;
+  margin: 8px 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
 .gallery,
 .facilities {
   display: grid;
