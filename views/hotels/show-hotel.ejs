@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= hotel.name %></title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
@@ -13,8 +14,12 @@
       <div class="hotel-header">
         <h1><%= hotel.name %></h1>
         <p><%= "⭐".repeat(hotel.rating) %> (<%= hotel.rating %>-star)</p>
+      
+
+        <h2>Location</h2>
         <p>📍 <%= hotel.location %></p>
-        <p><a href="<%= hotel.mapUrl %>" target="_blank">View on Google Maps</a></p>
+        <div id="hotel-map" data-name="<%= hotel.name %>"></div>
+
         <p><a href="/hotels/<%= hotel._id %>/reviews">Read guest reviews</a></p>
       </div>
 
@@ -66,5 +71,8 @@
         <button type="submit">Book Now</button>
       </form>
     </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/js/hotel-map.js"></script>
   </body>
 </html>
