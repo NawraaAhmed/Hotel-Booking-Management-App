@@ -4,20 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign In</title>
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
     <%- include('../partials/navbar') %>
-    <h1>Sign in</h1>
-    <% if (hasPendingBooking) { %>
-      <p>Please sign in to complete your booking. Your booking choices have been saved.</p>
-      <p>No account yet? <a href="/auth/sign-up">Sign up</a> first, then sign in.</p>
-    <% } %>
-    <form action="/auth/sign-in" method="POST">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" />
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
-      <button type="submit">Sign in</button>
-    </form>
+    <main>
+      <h1>Sign in</h1>
+      <% if (hasPendingBooking) { %>
+        <div class="info-message">
+          <p>Please sign in to complete your booking. Your booking choices have been saved.</p>
+          <p>No account yet? <a href="/auth/sign-up">Sign up</a> first, then sign in.</p>
+        </div>
+      <% } %>
+      <form class="form-card narrow" action="/auth/sign-in" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" />
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" />
+        <button type="submit">Sign in</button>
+      </form>
+    </main>
   </body>
 </html>

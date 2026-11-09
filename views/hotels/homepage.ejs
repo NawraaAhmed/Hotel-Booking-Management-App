@@ -4,17 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>All Hotels</title>
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
     <%- include('../partials/navbar') %>
 
-    <h1>All Hotels</h1>
+    <main>
+      <h1>All Hotels</h1>
 
-    <div class="hotel-list">
-      <% hotels.forEach(hotel => { %>
-        <%- include('../partials/hotel-card', { hotel, returnTo: "/hotels" }) %>
-      <% }) %>
-    </div>
+      <div class="hotel-list">
+        <% hotels.forEach(hotel => { %>
+          <%- include('../partials/hotel-card', { hotel, returnTo: "/hotels" }) %>
+        <% }) %>
+      </div>
+    </main>
 
   </body>
 </html>

@@ -80,7 +80,10 @@ router.get("/:hotelId/reviews", async (req, res) => {
     .populate("user", "username")
     .sort({ createdAt: -1 });
 
-  res.render("hotels/reviews.ejs", { hotel, reviews });
+  const message = req.session.message;
+  delete req.session.message;
+
+  res.render("hotels/reviews.ejs", { hotel, reviews, message });
 });
 
 // after favorite/unfavorite: go back to the page the heart was clicked on

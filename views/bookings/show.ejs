@@ -4,48 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Booking Details</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js" defer></script>
+    <script src="/js/alerts.js" defer></script>
   </head>
   <body>
     <%- include('../partials/navbar') %>
 
-    <h1>Booking Details</h1>
+    <main>
+      <h1>Booking Details</h1>
 
-    <% if (booking.hotel) { %>
-      <h2><a href="/hotels/<%= booking.hotel._id %>"><%= booking.hotel.name %></a></h2>
-    <% } %>
-    <ul>
-      <li>Check-in: <%= booking.checkIn %></li>
-      <li>Check-out: <%= booking.checkOut %></li>
-      <li>Nights: <%= nights %></li>
-      <li>Adults: <%= booking.adults %></li>
-      <li>Children: <%= booking.children %></li>
-      <li>Rooms: <%= booking.rooms %></li>
-      <li>Room type: <%= booking.roomType %></li>
-      <li>Bed type: <%= booking.bedType %></li>
-      <li>View type: <%= booking.viewType %></li>
-      <li>Meal plan: <%= booking.mealPlan %></li>
-      <li>Total price: BHD <%= booking.totalPrice %></li>
-    </ul>
+      <% if (booking.hotel) { %>
+        <h2><a href="/hotels/<%= booking.hotel._id %>"><%= booking.hotel.name %></a></h2>
+      <% } %>
+      <ul class="details-list">
+        <li>Check-in: <%= booking.checkIn %></li>
+        <li>Check-out: <%= booking.checkOut %></li>
+        <li>Nights: <%= nights %></li>
+        <li>Adults: <%= booking.adults %></li>
+        <li>Children: <%= booking.children %></li>
+        <li>Rooms: <%= booking.rooms %></li>
+        <li>Room type: <%= booking.roomType %></li>
+        <li>Bed type: <%= booking.bedType %></li>
+        <li>View type: <%= booking.viewType %></li>
+        <li>Meal plan: <%= booking.mealPlan %></li>
+        <li><strong>Total price: BHD <%= booking.totalPrice %></strong></li>
+      </ul>
 
-    <% if (canChange) { %>
-      <a href="/bookings/<%= booking._id %>/edit">Edit Booking</a>
-      <form action="/bookings/<%= booking._id %>?_method=DELETE" method="POST">
-        <button type="submit">Cancel Booking</button>
-      </form>
-    <% } else { %>
-      <p>This booking can no longer be edited or cancelled because the check-in date has arrived.</p>
-    <% } %>
+      <% if (canChange) { %>
+        <div class="actions">
+          <a class="button" href="/bookings/<%= booking._id %>/edit">Edit Booking</a>
+          <form action="/bookings/<%= booking._id %>?_method=DELETE" method="POST" data-confirm="Cancel this booking? This cannot be undone." data-confirm-button="Yes, cancel it">
+            <button type="submit" class="button-danger">Cancel Booking</button>
+          </form>
+        </div>
+      <% } else { %>
+        <p class="info-message">This booking can no longer be edited or cancelled because the check-in date has arrived.</p>
+      <% } %>
 
-    <h2>Your Review</h2>
-    <% if (review) { %>
-      <p><%= "★".repeat(review.rating) %> (<%= review.rating %>/5)</p>
-      <p><%= review.comment %></p>
-      <a href="/reviews/<%= review._id %>/edit">Edit Review</a>
-    <% } else if (canReview) { %>
-      <a href="/reviews/new/<%= booking._id %>">Write a Review</a>
-    <% } else { %>
-      <p>You can review this hotel after your check-out date has passed.</p>
-    <% } %>
+      <h2>Your Review</h2>
+      <% if (review) { %>
+        <div class="review">
+          <p><%= "★".repeat(review.rating) %> (<%= review.rating %>/5)</p>
+          <p><%= review.comment %></p>
+          <div class="actions">
+            <a class="button button-secondary" href="/reviews/<%= review._id %>/edit">Edit Review</a>
+          </div>
+        </div>
+      <% } else if (canReview) { %>
+        <a class="button" href="/reviews/new/<%= booking._id %>">Write a Review</a>
+      <% } else { %>
+        <p class="muted">You can review this hotel after your check-out date has passed.</p>
+      <% } %>
+    </main>
 
   </body>
 </html>

@@ -4,23 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js" defer></script>
+    <script src="/js/alerts.js" defer></script>
   </head>
   <body>
     <%- include('./partials/navbar') %>
 
-    <% if (message) { %>
-      <p class="success-message"><%= message %></p>
-    <% } %>
+    <main>
+      <% if (message) { %>
+        <p class="success-message"><%= message %></p>
+      <% } %>
 
-    <h1>Welcome to Mabeet<% if (user) { %>, <%= user.username %><% } %>!</h1>
-    <p>Find and book your perfect stay in Bahrain.</p>
+      <div class="hero">
+        <h1>Welcome to Mabeet<% if (user) { %>, <%= user.username %><% } %>!</h1>
+        <p>Find and book your perfect stay in Bahrain.</p>
+      </div>
 
-    <h2>Top 5-Star Hotels</h2>
-    <div class="hotel-list">
-      <% topHotels.forEach(hotel => { %>
-        <%- include('./partials/hotel-card', { hotel, returnTo: "/" }) %>
-      <% }) %>
-    </div>
+      <h2>Top 5-Star Hotels</h2>
+      <div class="hotel-list">
+        <% topHotels.forEach(hotel => { %>
+          <%- include('./partials/hotel-card', { hotel, returnTo: "/" }) %>
+        <% }) %>
+      </div>
+    </main>
 
   </body>
 </html>

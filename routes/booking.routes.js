@@ -93,7 +93,11 @@ router.get("/", async (req, res) => {
   const bookings = await Booking.find({ user: req.session.user._id })
     .populate("hotel")
     .sort({ checkIn: 1 });
-  res.render("bookings/index.ejs", { bookings, today: getToday() });
+
+  const message = req.session.message;
+  delete req.session.message;
+
+  res.render("bookings/index.ejs", { bookings, today: getToday(), message });
 });
 
 // READ one booking
@@ -200,6 +204,7 @@ router.delete("/:bookingId", async (req, res) => {
     _id: booking._id,
     user: req.session.user._id,
   });
+  req.session.message = "Your booking has been cancelled.";
   res.redirect("/bookings");
 });
 

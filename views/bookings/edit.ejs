@@ -4,20 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit Booking</title>
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
     <%- include('../partials/navbar') %>
 
-    <h1>Edit Booking — <%= hotel.name %></h1>
+    <main>
+      <h1>Edit Booking — <%= hotel.name %></h1>
 
-    <% if (error) { %>
-      <p class="error-message"><%= error %></p>
-    <% } %>
+      <% if (error) { %>
+        <p class="error-message"><%= error %></p>
+      <% } %>
 
-    <form action="/bookings/<%= booking._id %>?_method=PUT" method="POST">
-      <%- include('../partials/booking-fields', { hotel, formData, today }) %>
-      <p>The total price will be recalculated automatically.</p>
-      <button type="submit">Update Booking</button>
-    </form>
+      <form class="form-card" action="/bookings/<%= booking._id %>?_method=PUT" method="POST">
+        <%- include('../partials/booking-fields', { hotel, formData, today }) %>
+        <p class="form-note">The total price will be recalculated automatically.</p>
+        <button type="submit">Update Booking</button>
+      </form>
+    </main>
   </body>
 </html>

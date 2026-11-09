@@ -4,30 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit Review</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js" defer></script>
+    <script src="/js/alerts.js" defer></script>
   </head>
   <body>
     <%- include('../partials/navbar') %>
 
-    <h1>Edit Your Review — <%= review.hotel.name %></h1>
+    <main>
+      <h1>Edit Your Review — <%= review.hotel.name %></h1>
 
-    <% if (error) { %>
-      <p class="error-message"><%= error %></p>
-    <% } %>
+      <% if (error) { %>
+        <p class="error-message"><%= error %></p>
+      <% } %>
 
-    <form action="/reviews/<%= review._id %>?_method=PUT" method="POST">
-      <label for="rating">Rating (1–5):</label>
-      <input type="number" id="rating" name="rating" min="1" max="5" step="1" value="<%= formData.rating %>" required />
+      <form class="form-card" action="/reviews/<%= review._id %>?_method=PUT" method="POST">
+        <label for="rating">Rating (1–5):</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" step="1" value="<%= formData.rating %>" required />
 
-      <label for="comment">Comment:</label>
-      <textarea id="comment" name="comment" required><%= formData.comment %></textarea>
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment" required><%= formData.comment %></textarea>
 
-      <button type="submit">Update Review</button>
-    </form>
+        <button type="submit">Update Review</button>
+      </form>
 
-    <form action="/reviews/<%= review._id %>?_method=DELETE" method="POST">
-      <button type="submit">Delete Review</button>
-    </form>
-
-    <p><a href="/hotels/<%= review.hotel._id %>/reviews">Back to reviews</a></p>
+      <div class="actions">
+        <form action="/reviews/<%= review._id %>?_method=DELETE" method="POST" data-confirm="Delete this review? This cannot be undone." data-confirm-button="Yes, delete it">
+          <button type="submit" class="button-danger">Delete Review</button>
+        </form>
+        <a href="/hotels/<%= review.hotel._id %>/reviews">Back to reviews</a>
+      </div>
+    </main>
   </body>
 </html>

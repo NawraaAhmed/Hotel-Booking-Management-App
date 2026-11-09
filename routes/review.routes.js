@@ -81,6 +81,7 @@ router.post("/", async (req, res) => {
     booking: booking._id,
   });
 
+  req.session.message = "Thank you! Your review has been submitted.";
   res.redirect("/hotels/" + booking.hotel._id + "/reviews");
 });
 
@@ -123,6 +124,7 @@ router.put("/:reviewId", async (req, res) => {
     { runValidators: true },
   );
 
+  req.session.message = "Your review has been updated.";
   res.redirect("/hotels/" + review.hotel._id + "/reviews");
 });
 
@@ -135,6 +137,7 @@ router.delete("/:reviewId", async (req, res) => {
   if (!review) {
     return res.send("Review not found.");
   }
+  req.session.message = "Your review has been deleted.";
   res.redirect("/hotels/" + review.hotel + "/reviews");
 });
 

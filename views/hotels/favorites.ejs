@@ -4,27 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Favorites</title>
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
     <%- include('../partials/navbar') %>
 
-    <h1>My Favorites</h1>
+    <main>
+      <h1>My Favorites</h1>
 
-    <% if (hotels.length === 0) { %>
-      <p>You have no favorite hotels yet.</p>
-    <% } %>
+      <% if (hotels.length === 0) { %>
+        <p class="muted">You have no favorite hotels yet.</p>
+      <% } %>
 
-    <ul>
-      <% hotels.forEach(hotel => { %>
-        <li>
-          <form action="/hotels/<%= hotel._id %>/unfavorite" method="POST">
-            <a href="/hotels/<%= hotel._id %>"><%= hotel.name %></a>
-            <input type="hidden" name="returnTo" value="/hotels/favorites" />
-            <button type="submit" title="Remove from favorites">❤️</button>
-          </form>
-        </li>
-      <% }) %>
-    </ul>
+      <ul class="favorites-list">
+        <% hotels.forEach(hotel => { %>
+          <li>
+            <form action="/hotels/<%= hotel._id %>/unfavorite" method="POST">
+              <a href="/hotels/<%= hotel._id %>"><%= hotel.name %></a>
+              <input type="hidden" name="returnTo" value="/hotels/favorites" />
+              <button type="submit" class="heart-button" title="Remove from favorites">❤️</button>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+    </main>
 
   </body>
 </html>

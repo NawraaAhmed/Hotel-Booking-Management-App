@@ -4,30 +4,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reviews - <%= hotel.name %></title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js" defer></script>
+    <script src="/js/alerts.js" defer></script>
   </head>
   <body>
     <%- include('../partials/navbar') %>
 
-    <h1>Reviews for <%= hotel.name %></h1>
-    <p><a href="/hotels/<%= hotel._id %>">Back to hotel</a></p>
+    <main>
+      <% if (message) { %>
+        <p class="success-message"><%= message %></p>
+      <% } %>
 
-    <% if (reviews.length === 0) { %>
-      <p>No reviews yet.</p>
-    <% } %>
+      <h1>Reviews for <%= hotel.name %></h1>
 
-    <% reviews.forEach(review => { %>
-      <div class="review">
-        <p><strong><%= review.user ? review.user.username : "Former guest" %></strong> — <%= "⭐".repeat(review.rating) %> (<%= review.rating %>/5)</p>
-        <p><%= review.comment %></p>
-        <p>Posted on <%= review.createdAt.toDateString() %></p>
+      <% if (reviews.length === 0) { %>
+        <p class="muted">No reviews yet.</p>
+      <% } %>
 
-        <% if (user && review.user && review.user._id.toString() === user._id.toString()) { %>
-          <a href="/reviews/<%= review._id %>/edit">Edit</a>
-          <form action="/reviews/<%= review._id %>?_method=DELETE" method="POST">
-            <button>Delete</button>
-          </form>
-        <% } %>
-      </div>
-    <% }) %>
+      <% reviews.forEach(review => { %>
+        <div class="review">
+          <p><strong><%= review.user ? review.user.username : "Former guest" %></strong> — <%= "⭐".repeat(review.rating) %> (<%= review.rating %>/5)</p>
+          <p><%= review.comment %></p>
+          <p class="review-date">Posted on <%= review.createdAt.toDateString() %></p>
+
+          <% if (user && review.user && review.user._id.toString() === user._id.toString()) { %>
+            <div class="actions">
+              <a class="button button-secondary" href="/reviews/<%= review._id %>/edit">Edit</a>
+              <form action="/reviews/<%= review._id %>?_method=DELETE" method="POST" data-confirm="Delete this review? This cannot be undone." data-confirm-button="Yes, delete it">
+                <button class="button-danger">Delete</button>
+              </form>
+            </div>
+          <% } %>
+        </div>
+      <% }) %>
+    </main>
   </body>
 </html>

@@ -4,60 +4,67 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= hotel.name %></title>
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
     <%- include('../partials/navbar') %>
 
-    <h1><%= hotel.name %></h1>
-    <p><%= "⭐".repeat(hotel.rating) %> (<%= hotel.rating %>-star)</p>
-    <p><%= hotel.location %></p>
-    <p><a href="<%= hotel.mapUrl %>" target="_blank">View on Google Maps</a></p>
-    <p><a href="/hotels/<%= hotel._id %>/reviews">Read guest reviews</a></p>
+    <main>
+      <div class="hotel-header">
+        <h1><%= hotel.name %></h1>
+        <p><%= "⭐".repeat(hotel.rating) %> (<%= hotel.rating %>-star)</p>
+        <p>📍 <%= hotel.location %></p>
+        <p><a href="<%= hotel.mapUrl %>" target="_blank">View on Google Maps</a></p>
+        <p><a href="/hotels/<%= hotel._id %>/reviews">Read guest reviews</a></p>
+      </div>
 
-    <p>Favorited by: <%= hotel.favoriteByUsers.length %> people</p>
+      <div class="actions">
+        <span class="muted">Favorited by: <%= hotel.favoriteByUsers.length %> people</span>
 
-    <% if (user) { %>
-      <% const isFavorited = hotel.favoriteByUsers.some(oneUserId => oneUserId.equals(user._id)); %>
+        <% if (user) { %>
+          <% const isFavorited = hotel.favoriteByUsers.some(oneUserId => oneUserId.equals(user._id)); %>
 
-      <% if (isFavorited) { %>
-        <form action="/hotels/<%= hotel._id %>/unfavorite" method="POST">
-          <button type="submit" title="Remove from favorites">❤️</button>
-        </form>
-      <% } else { %>
-        <form action="/hotels/<%= hotel._id %>/favorite" method="POST">
-          <button type="submit" title="Add to favorites">🤍</button>
-        </form>
+          <% if (isFavorited) { %>
+            <form action="/hotels/<%= hotel._id %>/unfavorite" method="POST">
+              <button type="submit" class="heart-button" title="Remove from favorites">❤️</button>
+            </form>
+          <% } else { %>
+            <form action="/hotels/<%= hotel._id %>/favorite" method="POST">
+              <button type="submit" class="heart-button" title="Add to favorites">🤍</button>
+            </form>
+          <% } %>
+        <% } %>
+      </div>
+
+      <h2>Gallery</h2>
+      <div class="gallery">
+        <img src="<%= hotel.image %>" alt="<%= hotel.name %>" width="200" />
+        <% hotel.gallery.forEach(image => { %>
+          <img src="<%= image %>" alt="<%= hotel.name %>" width="200" />
+        <% }) %>
+      </div>
+
+      <h2>Facilities</h2>
+      <% if (hotel.facilities.length === 0) { %>
+        <p>No facilities listed for this hotel.</p>
       <% } %>
-    <% } %>
+      <div class="facilities">
+        <% hotel.facilities.forEach(facility => { %>
+          <div class="facility">
+            <img src="<%= facility.image %>" alt="<%= facility.name %>" width="200" />
+            <p><%= facility.name %></p>
+          </div>
+        <% }) %>
+      </div>
 
-    <h2>Gallery</h2>
-    <div class="gallery">
-      <img src="<%= hotel.image %>" alt="<%= hotel.name %>" width="200" />
-      <% hotel.gallery.forEach(image => { %>
-        <img src="<%= image %>" alt="<%= hotel.name %>" width="200" />
-      <% }) %>
-    </div>
-
-    <h2>Facilities</h2>
-    <% if (hotel.facilities.length === 0) { %>
-      <p>No facilities listed for this hotel.</p>
-    <% } %>
-    <div class="facilities">
-      <% hotel.facilities.forEach(facility => { %>
-        <div class="facility">
-          <img src="<%= facility.image %>" alt="<%= facility.name %>" width="200" />
-          <p><%= facility.name %></p>
-        </div>
-      <% }) %>
-    </div>
-
-    <h2>Book Your Stay</h2>
-    <% if (error) { %>
-      <p class="error-message"><%= error %></p>
-    <% } %>
-    <form action="/hotels/<%= hotel._id %>/book" method="POST">
-      <%- include('../partials/booking-fields', { hotel, formData, today }) %>
-      <button type="submit">Book Now</button>
-    </form>
+      <h2>Book Your Stay</h2>
+      <% if (error) { %>
+        <p class="error-message"><%= error %></p>
+      <% } %>
+      <form class="form-card" action="/hotels/<%= hotel._id %>/book" method="POST">
+        <%- include('../partials/booking-fields', { hotel, formData, today }) %>
+        <button type="submit">Book Now</button>
+      </form>
+    </main>
   </body>
 </html>
