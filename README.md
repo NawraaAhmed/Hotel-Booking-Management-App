@@ -133,6 +133,7 @@ PORT=3000
 - [SweetAlert2](https://sweetalert2.github.io/): used for the success pop-ups and the "are you sure?" confirmations (for example when cancelling a booking or deleting a review).
 - [Leaflet](https://leafletjs.com/): used to show the map with the hotel's marker on the hotel details page.
 - [OpenStreetMap](https://www.openstreetmap.org/): the map tiles Leaflet shows on the details page.
+- [Booking.com](https://www.booking.com): used for ideation.
 
 ## Credits
 
